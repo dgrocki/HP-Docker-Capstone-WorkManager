@@ -17,7 +17,7 @@ plugins {
 	
 }
 application {
-	mainClassName = 'com.hp.pwp.capstone.toBin'
+	mainClassName = 'com.hp.pwp.capstone.WorkManager'
 }
 dependencies {
     // Use the latest Groovy version for building this library
@@ -43,7 +43,7 @@ repositories {
 
 jar {
 	manifest {
-		attributes "Main-Class": "com.hp.pwp.capstone.toBin" ;
+		attributes "Main-Class": "com.hp.pwp.capstone.WorkManager" ;
 	}
 }
 
@@ -52,7 +52,7 @@ task uberjar(type: Jar, dependsOn: [':compileJava', ':compileGroovy', 'compileSo
     from configurations.runtime.asFileTree.files.collect { zipTree(it) }
 
     manifest {
-        attributes 'Main-Class': 'com.hp.pwp.capstone.toBin'
+        attributes 'Main-Class': 'com.hp.pwp.capstone.WorkManager'
     }
 }
 
