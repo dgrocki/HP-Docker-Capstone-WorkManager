@@ -1,0 +1,10 @@
+/build/
+/bin/
+.classpath
+.gitignore
+.gradle/
+.project
+.settings/
+.idea/
+/out/
+*~
