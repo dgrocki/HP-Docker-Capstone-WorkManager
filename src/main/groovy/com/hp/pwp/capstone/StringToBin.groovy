@@ -1,4 +1,8 @@
 package com.hp.pwp.capstone
+import com.surftools.BeanstalkClientImpl.ClientImpl
+import com.surftools.BeanstalkClientImpl.JobImpl
+import com.surftools.BeanstalkClient.BeanstalkException
+
 
 class Byte {
 	def bits = new int[8];
@@ -8,7 +12,7 @@ class Byte {
 	void setBits(int [] b) {
 		if(b.length != 8) {
 			println "Not enough bits\nChanges not saved";
-		
+
 			return;
 		}
 
@@ -16,7 +20,7 @@ class Byte {
 			if(b[i] != 0 && b[i] != 1) {
 				println "Bit string does not contain correct values.\nChanges not saved."
 
-				isSet = false;
+					isSet = false;
 				return;
 			} else {
 				bits[i] = b[i]
@@ -24,21 +28,21 @@ class Byte {
 		}			
 
 		isSet = true;
-		
+
 	}
 
 	void setBits(int ascii) {
 		if(ascii > 255 || ascii < 0) {
 			println "Provided value is less than or greater than the value a single bit can contain."
 
-			return;
+				return;
 		} else {
 			for(int i = 7; i >= 0; i--) {
 				println "power: $i | ascii: $ascii"
-				if(2**i < ascii) {
-					bits[7] = 1;
-					ascii -= 2**i;
-				} 
+					if(2**i < ascii) {
+						bits[7] = 1;
+						ascii -= 2**i;
+					} 
 			}
 
 			isSet = true;
@@ -54,13 +58,24 @@ class Byte {
 	}
 
 	static int main(String [] args) {
-			
+
 		def input;
 		boolean validInput = false;
 
+
+		long priority = 0;
+		int delaySeconds = 0;
+		int timeToRun = 10;
+		byte[] data = "hey";
+		ClientImpl connection = new ClientImpl("localhost", 11300);
+		connection.put(priority, delaySeconds, timeToRun, data);
+
+		JobImpl job = connection.reserve();
+		println job.data;
+
 		while(!(validInput)) {
 			input = System.console().readLine 'Enter a number: ';
-			
+
 			if(!(input.isInteger())) {
 				println "Please enter an integer";
 			}
