@@ -57,7 +57,7 @@ task uberjar(type: Jar, dependsOn: [':compileJava', ':compileGroovy', 'compileSo
 }
 
 task buildImage(type:Exec) {
-    commandLine 'docker', 'build', '-t', 'latest', '.'
+    commandLine 'docker', 'build', '-t', 'work-manager', '.'
 }
 
 //task runImage(type:Exec) {
