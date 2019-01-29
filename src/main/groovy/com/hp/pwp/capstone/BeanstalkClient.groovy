@@ -33,4 +33,8 @@ class BeanstalkClient{
 	public void useTube(String s){
 		connection.useTube(s);
 	}
+	public void watchTube(String s){
+		connection.watch(s);
+	}
+
 }

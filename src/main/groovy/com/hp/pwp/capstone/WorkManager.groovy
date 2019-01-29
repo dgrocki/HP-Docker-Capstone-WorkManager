@@ -6,12 +6,10 @@ class WorkManager{
 	private BeanstalkClient beanstalk = new BeanstalkClient();		
 	//pull a new job off the new_work queue
 	public recieve_new_work(){
-		beanstalk.useTube("new_work");
-		
-		//?????
+		beanstalk.watchTube("new_work");
+			
 		JobImpl job = beanstalk.recieveWork();
 		
-		println "here";	
 		String s = new String(job.data);
 		println s;
 		
@@ -23,7 +21,7 @@ class WorkManager{
 	public send_to_workerB(){}
 	//pull a job off of the riak queue
 	public send_to_riak(){
-		beanstalk.useTube("riak");
+		beanstalk.watchTube("riak");
 		JobImpl job = beanstalk.recieveWork();
 		
 		String s = new String(job.data);
@@ -47,11 +45,11 @@ class WorkManager{
 		beanstalk.useTube("new_work");
 		String input = "New work from the outside world";	
 		beanstalk.sendWork(input);
-		beanstalk.useTube("new_work");
-		input = "New work number 2 from the outside world";	
-		beanstalk.sendWork(input);
 		beanstalk.useTube("riak");
 		input = "More stuff for Riak";	
+		beanstalk.sendWork(input);
+		beanstalk.useTube("new_work");
+		input = "New work number 2 from the outside world";	
 		beanstalk.sendWork(input);
 		beanstalk.useTube("riak");
 		input = "Time to put something in Riak from Worker B";	
@@ -59,9 +57,7 @@ class WorkManager{
 		
 		
 		wm.recieve_new_work();
-		println "here";	
 		wm.send_to_riak();
-		println "here";	
 		wm.recieve_new_work();
 		wm.send_to_riak();
 		return;
