@@ -20,21 +20,51 @@ class BeanstalkClient{
 		byte[] data = json.getBytes();
 
 		connection.put(priority, delaySeconds, timeToRun, data);
-
 	}	
-	public JobImpl recieveWork(){
-		currentJob = connection.reserve();
-		return currentJob;
-	}
-	public void deleteWork(long id){	//when should we delete the job off of the queue?
-		connection.delete(id);
-
-	}
+	//functionhere for testing purposes
 	public void useTube(String s){
 		connection.useTube(s);
 	}
-	public void watchTube(String s){
-		connection.watch(s);
+	//pull a new job off the new_work queue
+	public String recieve_new_work(){
+		connection.watchTube("new_work");
+			
+		JobImpl job = beanstalk.recieveWork();
+		
+		String s = new String(job.data);
+		println s;
+		
+		connection.delete(job.jobId);
+			
+		return s;
 	}
+	//put a new job on the to_workerB queue
+	public void send_to_workerB(String json){
+		connection.usetTube("to_worker_b");
+		sendWork(json);
+		
+		
+	}
+	//pull a job off of the riak queue
+	//returns a string of json data and the job is deleted
+	public String recieve_riak_work(){
+		connection.watchTube("riak");
+		JobImpl job = beanstalk.recieveWork();
+		
+		String s = new String(job.data);
+		println s;
+		
+		connection.delete(job.jobId);
+					
+		return s;
+
+	}
+	//put a job on the status queue
+	public void send_status(String json){
+		connection.usetTube("status");
+		sendWork(json);
+	}
+
+
 
 }
