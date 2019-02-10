@@ -29,7 +29,7 @@ dependencies {
    compile group: 'com.surftools', name: 'BeanstalkClient' , version: '1.4.6' 
    
 //   compile group: 'com.basho.riak', name: 'riak-client', version '2.1.1'
-//   compile 'com.basho.riak:riak-client:2.1.1'
+   compile 'com.basho.riak:riak-client:2.1.1'
 }
 
 // In this section you declare where to find the dependencies of your project

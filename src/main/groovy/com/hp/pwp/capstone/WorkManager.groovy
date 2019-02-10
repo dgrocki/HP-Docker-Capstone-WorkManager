@@ -6,7 +6,10 @@ import com.surftools.BeanstalkClient.BeanstalkException
 class WorkManager{
 	
 	public static void main(String [] args) {
-		BeanstalkClient beanstalk = new BeanstalkClient();		
+
+		Riak r = new Riak();
+		println r.myData();
+/*		BeanstalkClient beanstalk = new BeanstalkClient();		
 
 			
 		beanstalk.useTube("new_work");
@@ -23,7 +26,7 @@ class WorkManager{
 		
 		beanstalk.useTube("to_worker_b");	
 		beanstalk.sendWork(new_work);
-
+*/
 		return;
 	}
 
