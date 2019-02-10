@@ -4,33 +4,26 @@ import com.surftools.BeanstalkClientImpl.JobImpl
 import com.surftools.BeanstalkClient.BeanstalkException
 
 class WorkManager{
-	private BeanstalkClient beanstalk = new BeanstalkClient();		
 	
 	public static void main(String [] args) {
-		WorkManager beanstalk = new WorkManager();
-
 		BeanstalkClient beanstalk = new BeanstalkClient();		
-
 
 			
 		beanstalk.useTube("new_work");
 		String input = "New work from the outside world";	
 		beanstalk.sendWork(input);
-		beanstalk.useTube("riak");
-		input = "More stuff for Riak";	
-		beanstalk.sendWork(input);
-		beanstalk.useTube("new_work");
-		input = "New work number 2 from the outside world";	
-		beanstalk.sendWork(input);
-		beanstalk.useTube("riak");
-		input = "Time to put something in Riak from Worker B";	
-		beanstalk.sendWork(input);
 		
+		sleep(2000);
+
+		String new_work = beanstalk.recieve_new_work();
+		println "Recieved new work: \n" + new_work;
+		beanstalk.send_to_workerB(new_work);
 		
-		beanstalk.recieve_new_work();
-		beanstalk.send_to_riak();
-		beanstalk.recieve_new_work();
-		beanstalk.send_to_riak();
+		new_work += " + worker B info";		
+		
+		beanstalk.useTube("to_worker_b");	
+		beanstalk.sendWork(new_work);
+
 		return;
 	}
 

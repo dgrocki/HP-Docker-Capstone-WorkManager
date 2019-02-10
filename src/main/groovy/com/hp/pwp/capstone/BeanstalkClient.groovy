@@ -27,20 +27,15 @@ class BeanstalkClient{
 	}
 	//pull a new job off the new_work queue
 	public String recieve_new_work(){
-		connection.watchTube("new_work");
-			
-		JobImpl job = beanstalk.recieveWork();
-		
+		connection.watch("new_work");
+		JobImpl job = connection.reserve();
 		String s = new String(job.data);
-		println s;
-		
 		connection.delete(job.jobId);
-			
 		return s;
 	}
 	//put a new job on the to_workerB queue
 	public void send_to_workerB(String json){
-		connection.usetTube("to_worker_b");
+		connection.useTube("to_worker_b");
 		sendWork(json);
 		
 		
@@ -48,8 +43,8 @@ class BeanstalkClient{
 	//pull a job off of the riak queue
 	//returns a string of json data and the job is deleted
 	public String recieve_riak_work(){
-		connection.watchTube("riak");
-		JobImpl job = beanstalk.recieveWork();
+		connection.watch("riak");
+		JobImpl job = connection.reserve();
 		
 		String s = new String(job.data);
 		println s;
