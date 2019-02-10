@@ -27,6 +27,9 @@ dependencies {
     testCompile 'org.spockframework:spock-core:1.1-groovy-2.4'
 
    compile group: 'com.surftools', name: 'BeanstalkClient' , version: '1.4.6' 
+   
+//   compile group: 'com.basho.riak', name: 'riak-client', version '2.1.1'
+//   compile 'com.basho.riak:riak-client:2.1.1'
 }
 
 // In this section you declare where to find the dependencies of your project
@@ -37,6 +40,7 @@ repositories {
     maven{
     	url 'https://mvnrepository.com/artifact/com.surftools/BeanstlkdClient'
 	url 'http://repo.maven.apache.org/maven2'	    
+	url 'https://mvnrepository.com/artifact/com.basho.riak/riak-client'
 	}
     mavenCentral()
 }
