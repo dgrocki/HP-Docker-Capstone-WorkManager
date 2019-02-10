@@ -8,7 +8,7 @@ class WorkManager{
 	public static void main(String [] args) {
 		BeanstalkClient beanstalk = new BeanstalkClient();		
 
-			
+
 		beanstalk.useTube("new_work");
 		String input = "New work from the outside world";	
 		beanstalk.sendWork(input);
