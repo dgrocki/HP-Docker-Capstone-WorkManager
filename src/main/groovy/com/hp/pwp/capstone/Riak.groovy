@@ -18,7 +18,8 @@ class Riak{
 		FetchValue fv = new FetchValue.Builder(location).build();
 		FetchValue.Response response = client.execute(fv);
 
-		return response.getValue(String.class);
+		String s = response.getValue(String.class);
+		return s;
 
 	}
 
