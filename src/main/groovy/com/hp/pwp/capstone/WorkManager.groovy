@@ -25,10 +25,6 @@ class WorkManager{
 
 		def await_new_work = actor {
 			BeanstalkClient beanstalk = new BeanstalkClient();		
-			beanstalk.useTube("new_work");
-			String input = "New work from the outside world";	
-			beanstalk.sendWork(input);
-			sleep(2000);
 			while(1){
 
 				String new_work = beanstalk.recieve_new_work();
