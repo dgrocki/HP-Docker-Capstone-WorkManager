@@ -45,12 +45,8 @@ class BeanstalkClient{
 	public String recieve_riak_work(){
 		connection.watch("riak");
 		JobImpl job = connection.reserve();
-		
 		String s = new String(job.data);
-		println s;
-		
 		connection.delete(job.jobId);
-					
 		return s;
 
 	}
