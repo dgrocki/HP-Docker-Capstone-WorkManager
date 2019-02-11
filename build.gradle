@@ -17,7 +17,7 @@ plugins {
 	
 }
 application {
-	mainClassName = 'com.hp.pwp.capstone.WorkManager'
+	mainClassName = 'com.hp.pwp.capstone.InputManager'
 }
 dependencies {
     // Use the latest Groovy version for building this library
@@ -43,7 +43,7 @@ repositories {
 
 jar {
 	manifest {
-		attributes "Main-Class": "com.hp.pwp.capstone.WorkManager" ;
+		attributes "Main-Class": "com.hp.pwp.capstone.InputManager" ;
 	}
 }
 
@@ -52,12 +52,12 @@ task uberjar(type: Jar, dependsOn: [':compileJava', ':compileGroovy', 'compileSo
     from configurations.runtime.asFileTree.files.collect { zipTree(it) }
 
     manifest {
-        attributes 'Main-Class': 'com.hp.pwp.capstone.WorkManager'
+        attributes 'Main-Class': 'com.hp.pwp.capstone.InputManager'
     }
 }
 
 task buildImage(type:Exec) {
-    commandLine 'docker', 'build', '-t', 'work-manager', '.'
+    commandLine 'docker', 'build', '-t', 'input-manager', '.'
 }
 
 //task runImage(type:Exec) {
