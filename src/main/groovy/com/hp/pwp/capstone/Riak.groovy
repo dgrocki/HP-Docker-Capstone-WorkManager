@@ -10,19 +10,37 @@ import java.net.UnknownHostException;
 import java.util.concurrent.ExecutionException;
 
 class Riak{
-	RiakClient client = RiakClient.newClient(8087, "172.17.0.2");
+	private RiakClient client = RiakClient.newClient(8087, "172.17.0.2");
 	
-	Location location = new Location(new Namespace("Test Bucker"), "TestKey" );
-	String myData = "this is my data";
-	StoreValue sv = new StoreValue.Builder(myData).withLocation(location).build();
-	StoreValue.Response svResponse = client.execute(sv);
-
+	private Location location = new Location(new Namespace("Test Bucker"), "TestKey" );
 	
-	FetchValue fv = new FetchValue.Builder(location).build();
-	FetchValue.Response response = client.execute(fv);
+	public String fetch(){
+		FetchValue fv = new FetchValue.Builder(location).build();
+		FetchValue.Response response = client.execute(fv);
 
-	String value = response.getValue(String.class);
-	public String myData(){
-		return value;
+		return response.getValue(String.class);
+
 	}
+
+	public Boolean store(String myData){
+		StoreValue sv = new StoreValue.Builder(myData).withLocation(location).build();
+		StoreValue.Response svResponse = client.execute(sv);
+		return svResponse;
+
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
