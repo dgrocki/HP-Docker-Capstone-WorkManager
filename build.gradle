@@ -27,7 +27,9 @@ dependencies {
     testCompile 'org.spockframework:spock-core:1.1-groovy-2.4'
 
    compile group: 'com.surftools', name: 'BeanstalkClient' , version: '1.4.6' 
-   
+   compile group: 'org.eclipse.jetty', name: 'jetty-server', version: '9.4.15.v20190215'
+   compile group: 'org.eclipse.jetty', name: 'jetty-servlet', version: '9.4.15.v20190215'
+   implementation 'com.google.code.gson:gson:2.8.5' 
 //   compile group: 'com.basho.riak', name: 'riak-client', version '2.1.1'
 //   compile 'com.basho.riak:riak-client:2.1.1'
 }
