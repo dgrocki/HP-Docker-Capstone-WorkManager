@@ -6,10 +6,11 @@ import com.surftools.BeanstalkClient.BeanstalkException
 
 
 class BeanstalkClient{
-	private ClientImpl connection = new ClientImpl("0.0.0.0", 11300);
+	//private ClientImpl connection = new ClientImpl("0.0.0.0", 11300);
+	private ClientImpl connection = new ClientImpl("172.18.0.2", 11300);
 	private JobImpl currentJob;	//can we only be working on one job at a time?
 	public List<String> listTubes(){
-		connection.useTube("riak")
+		connection.useTube("riak2")
 			return connection.listTubes();
 	}
 
@@ -27,7 +28,7 @@ class BeanstalkClient{
 	}
 	//pull a new job off the new_work queue
 	public String recieve_new_work(){
-		connection.watch("new_work");
+		connection.watch("new_work2");
 		JobImpl job = connection.reserve();
 		String s = new String(job.data);
 		connection.delete(job.jobId);
@@ -35,7 +36,7 @@ class BeanstalkClient{
 	}
 	//put a new job on the to_workerB queue
 	public void send_to_workerB(String json){
-		connection.useTube("to_worker_b");
+		connection.useTube("to_worker_b2");
 		sendWork(json);
 		
 		
@@ -43,7 +44,7 @@ class BeanstalkClient{
 	//pull a job off of the riak queue
 	//returns a string of json data and the job is deleted
 	public String recieve_riak_work(){
-		connection.watch("riak");
+		connection.watch("riak2");
 		JobImpl job = connection.reserve();
 		String s = new String(job.data);
 		connection.delete(job.jobId);

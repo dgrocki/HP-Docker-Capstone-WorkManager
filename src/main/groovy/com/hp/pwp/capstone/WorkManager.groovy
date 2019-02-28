@@ -12,7 +12,7 @@ class WorkManager{
 
 			BeanstalkClient beanstalk = new BeanstalkClient();		
 			Riak riak_client = new Riak();
-
+			
 			while(1){
 				String new_work = beanstalk.recieve_riak_work();
 				println "Storing in riak... ";
