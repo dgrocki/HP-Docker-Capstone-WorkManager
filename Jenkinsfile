@@ -29,7 +29,7 @@ node('docker') {
         /* This builds the actual image; synonymous to
          * docker build on the command line */
 			sh './gradlew build'
-      	app = docker.build("iceberg00/hp-docker-capstone-WorkManager")
+      	app = docker.build("iceberg00/hp-docker-capstone-workmanager")
     }
 
     stage('Test image') {
