@@ -8,7 +8,9 @@ class WorkManager{
 
 	public static void main(String [] args) {
 
+	
 		def riak = actor{
+				println System.getenv("BEANSTALK");
 
 			BeanstalkClient beanstalk = new BeanstalkClient();		
 			Riak riak_client = new Riak();
@@ -24,6 +26,7 @@ class WorkManager{
 		}
 
 		def await_new_work = actor {
+				println System.getenv("BEANSTALK");
 			BeanstalkClient beanstalk = new BeanstalkClient();		
 			while(1){
 

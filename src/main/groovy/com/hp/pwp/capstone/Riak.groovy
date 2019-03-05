@@ -10,7 +10,8 @@ import java.net.UnknownHostException;
 import java.util.concurrent.ExecutionException;
 
 class Riak{
-	private RiakClient client = RiakClient.newClient(8087, "172.18.0.3");	
+	private String riak_node = System.getenv("RIAKNODE");
+	private RiakClient client = RiakClient.newClient(8087, riak_node);	
 	private Location location = new Location(new Namespace("Test Bucker"), "TestKey" );
 	
 	public String fetch(){
