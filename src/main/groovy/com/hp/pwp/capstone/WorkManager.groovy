@@ -12,7 +12,11 @@ class WorkManager{
 
 	public static void main(String [] args) {
 
-		final Jetty jetty = new Jetty(8080);
+		BeanstalkClient beanstalk = new BeanstalkClient();		
+
+		beanstalk.useTube("new_work");
+
+		final Jetty jetty = new Jetty(8080, beanstalk);
 		jetty.start();
 		Thread.sleep(500);
 		if (false == jetty.isStarted()) {
