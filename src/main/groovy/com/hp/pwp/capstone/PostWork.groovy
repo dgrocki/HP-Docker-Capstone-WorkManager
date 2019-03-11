@@ -7,6 +7,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import groovy.json.JsonSlurper
+
 
 @SuppressWarnings("serial")
 public class PostWork extends HttpServlet 
@@ -22,6 +24,7 @@ public class PostWork extends HttpServlet
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
     throws ServletException, IOException 
     {
+        def parser = new JsonSlurper()
         StringBuffer jb = new StringBuffer();
         String line = null;
 
@@ -32,8 +35,15 @@ public class PostWork extends HttpServlet
                 jb.append(line);
             }
             
+            def json = parser.parseText(jb.toString())
 
-            println( jb )            
+            println("==POST[WorkA]: " + json )
+
+            if(json.path && json.WID && json.JID && json.startPage && json.endPage) {
+                println("==POST[WorkA]: JSON has everything I need :*)")
+            } else {
+                throw new IOException("The submitted JSON object does not have all the required fields :*(")
+            }
 
             final long timeStamp = System.currentTimeMillis();
             
@@ -41,7 +51,7 @@ public class PostWork extends HttpServlet
             
             response.setStatus(HttpServletResponse.SC_OK);
         } catch (Exception ex) {
-            println( ex )
+            println( "**POST[WorkA] ERR: " + ex )
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         } finally {
             response.getWriter().close();

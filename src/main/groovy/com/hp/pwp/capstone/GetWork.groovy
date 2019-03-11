@@ -31,13 +31,20 @@ public class GetWork extends HttpServlet
 
         def json = parser.parseText(output)
 
-        println( json )
+        if(json.path && json.WID && json.JID && json.startPage && json.endPage) {
+            println("==GET[WorkA]: JSON has everything I need :*)")
+        } else {
+            throw new IOException("The submitted JSON object does not have all the required fields :*(")
+        }
+
+        println( "==GET[WorkerA]: " + json )
 
         try {
             response.setContentType("text/html;charset=UTF-8");
             PrintWriter out = response.getWriter();
             out.println( output )
         } catch (Exception ex) {
+            println("**GET[WorkA] ERR: " + ex)
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         } finally {
             //out.close();
