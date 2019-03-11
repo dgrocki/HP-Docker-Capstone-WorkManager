@@ -22,12 +22,26 @@ public class PostWork extends HttpServlet
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
     throws ServletException, IOException 
     {
+        StringBuffer jb = new StringBuffer();
+        String line = null;
+
         try {
+            BufferedReader reader = request.getReader();
+
+            while((line = reader.readLine()) != null) {
+                jb.append(line);
+            }
+            
+
+            println( jb )            
+
             final long timeStamp = System.currentTimeMillis();
-            final String work = request.getParameter("work");
-            servBeanStalk.sendWork(work);
+            
+            servBeanStalk.sendWork(jb.toString());
+            
             response.setStatus(HttpServletResponse.SC_OK);
         } catch (Exception ex) {
+            println( ex )
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         } finally {
             response.getWriter().close();
