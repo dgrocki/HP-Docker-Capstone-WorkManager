@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import groovy.json.JsonSlurper
 
 @SuppressWarnings("serial")
 public class GetWork extends HttpServlet 
@@ -24,7 +25,14 @@ public class GetWork extends HttpServlet
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
     throws ServletException, IOException 
     {
+        def parser = new JsonSlurper()
+
         output = servBeanStalk.recieve_new_work();
+
+        def json = parser.parseText(output)
+
+        println( json )
+
         try {
             response.setContentType("text/html;charset=UTF-8");
             PrintWriter out = response.getWriter();
