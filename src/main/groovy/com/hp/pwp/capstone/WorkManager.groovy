@@ -31,7 +31,11 @@ class WorkManager{
 			while(1){
 
 				String new_work = beanstalk.recieve_new_work();
+				
 				println "Recieved new work: \n" + new_work;
+				
+				
+
 				beanstalk.send_to_workerB(new_work);
 			}
 

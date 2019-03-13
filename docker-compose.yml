@@ -1,4 +1,4 @@
-version: "3"
+version: "2"
 services:
   coordinator:
     image: basho/riak-kv
@@ -9,6 +9,7 @@ services:
       - CLUSTER_NAME=riakkv
     labels:
       - "com.basho.riak.cluster.name=riak-kv"
+    network_mode: bridge
   member:
     image: basho/riak-kv
     ports:
@@ -18,29 +19,10 @@ services:
       - "com.basho.riak.cluster.name=riak-kv"
     links:
       - coordinator
+    network_mode: bridge
     depends_on:
       - coordinator
     environment:
       - CLUSTER_NAME=riakkv
       - COORDINATOR_NODE=coordinator
 
-  beanstalk:
-    image: schickling/beanstalkd
-    ports: 
-      - "11300:11300"
-
-  workmanager:
-    image: work-manager
-    links: 
-      - beanstalk
-    depends_on:
-      - beanstalk
-    environment:
-      - BEANSTALK=beanstalk
-      - RIAKNODE=coordinator
-
-networks:
-  default:
-    external:
-      name: composeTest 
- 
