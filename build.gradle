@@ -16,6 +16,9 @@ plugins {
 	id 'maven'
 	
 }
+
+apply plugin: 'jacoco'
+
 application {
 	mainClassName = 'com.hp.pwp.capstone.WorkManager'
 }
