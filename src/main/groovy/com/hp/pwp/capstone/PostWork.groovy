@@ -39,7 +39,7 @@ public class PostWork extends HttpServlet
 
             println("==POST[WorkA]: " + json )
 
-            if(json.path && json.WID && json.JID && json.startPage && json.endPage) {
+            if(json.jobBool && json.path && json.outPath && json.pageLength && json.startPage && json.endPage && json.wid && json.jid && json.status) {
                 println("==POST[WorkA]: JSON has everything I need :*)")
             } else {
                 throw new IOException("The submitted JSON object does not have all the required fields :*(")
@@ -52,6 +52,10 @@ public class PostWork extends HttpServlet
             response.setStatus(HttpServletResponse.SC_OK);
         } catch (Exception ex) {
             println( "**POST[WorkA] ERR: " + ex )
+
+            PrintWriter out = response.getWriter();
+            out.println( "ERR: " + ex )
+ 
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         } finally {
             response.getWriter().close();
