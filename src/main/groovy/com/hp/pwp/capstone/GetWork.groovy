@@ -31,7 +31,7 @@ public class GetWork extends HttpServlet
 
         def json = parser.parseText(output)
 
-        if(json.path && json.WID && json.JID && json.startPage && json.endPage) {
+        if(json.jobBool && json.path && json.outPath && json.pageLength && json.startPage && json.endPage && json.wid && json.jid && json.status) {
             println("==GET[WorkA]: JSON has everything I need :*)")
         } else {
             throw new IOException("The submitted JSON object does not have all the required fields :*(")
