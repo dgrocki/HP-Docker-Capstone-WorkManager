@@ -33,6 +33,13 @@ class BeanstalkClient{
 		connection.delete(job.jobId);
 		return s;
 	}
+
+        // Send work to workerA
+        public void send_to_workerA(String json) {
+            connection.useTube("new_work");
+            sendWork(json);
+        }
+
 	//put a new job on the to_workerB queue
 	public void send_to_workerB(String json){
 		connection.useTube("to_worker_b");
@@ -59,6 +66,16 @@ class BeanstalkClient{
 		connection.usetTube("status");
 		sendWork(json);
 	}
+
+        public boolean peek_jobs() {
+                String resp = connection.peek()
+
+                if(resp == "NOT_FOUND\r\n") {
+                    return false;
+                } else {
+                    return true;
+                }
+        }
 
 
 

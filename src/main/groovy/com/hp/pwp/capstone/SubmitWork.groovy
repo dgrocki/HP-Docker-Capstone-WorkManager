@@ -11,11 +11,11 @@ import groovy.json.JsonSlurper
 
 
 @SuppressWarnings("serial")
-public class PostWork extends HttpServlet 
+public class SubmitWork extends HttpServlet 
 {
     private BeanstalkClient servBeanStalk;
 
-    public PostWork(BeanstalkClient beanstalk) 
+    public SubmitWork(BeanstalkClient beanstalk) 
     {
         servBeanStalk = beanstalk;
     }
@@ -47,8 +47,8 @@ public class PostWork extends HttpServlet
 
             final long timeStamp = System.currentTimeMillis();
             
-            servBeanStalk.send_to_workerB(jb.toString());
-            
+            servBeanStalk.send_to_workerA(jb.toString()); //submit work for worker A to finish
+
             response.setStatus(HttpServletResponse.SC_OK);
         } catch (Exception ex) {
             println( "**POST[WorkA] ERR: " + ex )

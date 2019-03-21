@@ -27,6 +27,12 @@ public class GetWork extends HttpServlet
     {
         def parser = new JsonSlurper()
 
+        if(!(servBeanStalk.peek_jobs())) {
+            print("Now work!")            
+
+            int i = 0;
+        }
+
         output = servBeanStalk.recieve_new_work();
 
         def json = parser.parseText(output)

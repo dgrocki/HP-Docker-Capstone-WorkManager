@@ -25,6 +25,7 @@ public class Jetty extends Server
         context.setContextPath("/workManager");
         context.addServlet(new ServletHolder(new GetWork(beanstalk)), "/getWorkA/*");
         context.addServlet(new ServletHolder(new PostWork(beanstalk)), "/postWork/*");
+        context.addServlet(new ServletHolder(new SubmitWork(beanstalk)), "/submitWork/*");
         
         //workManager.setContextPath("/workManager")
         //context.setHandlers(new Handler[] { workerA, workManager });
