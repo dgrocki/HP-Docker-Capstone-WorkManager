@@ -38,6 +38,7 @@ public class PostWork extends HttpServlet
             def json = parser.parseText(jb.toString())
 
             println("==POST[WorkA]: " + json )
+	
 
             if(json.jobBool && json.path && json.outPath && json.pageLength && json.startPage && json.endPage && json.wid && json.jid && json.status) {
                 println("==POST[WorkA]: JSON has everything I need :*)")

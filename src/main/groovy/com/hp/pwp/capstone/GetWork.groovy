@@ -29,6 +29,9 @@ public class GetWork extends HttpServlet
 
         output = servBeanStalk.recieve_new_work();
 
+	println "this is output";
+	println output;	
+
         def json = parser.parseText(output)
 
         if(json.jobBool && json.path && json.outPath && json.pageLength && json.startPage && json.endPage && json.wid && json.jid && json.status) {
