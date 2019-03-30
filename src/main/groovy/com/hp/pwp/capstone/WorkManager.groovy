@@ -38,18 +38,25 @@ class WorkManager{
 				byte[] fileArray;
 				fileArray = Files.readAllBytes(file.toPath());
 
-				String store_value = new String(fileArray);
-				println "Storing in riak... ";
-				riak_client.store(store_value);
 
+				println "Storing in riak... ";
+				riak_client.store(fileArray);
+				
 
 
 				println "Fetching from riak... ";
 				byte[]fetch =  riak_client.fetch();
-				println fetch;
+				//println fetch;
 				s = "/mnt/Out.pdf";
 				File file2 = new File(s);
 				Files.write(file2.toPath(), fetch);
+
+				if(fetch != fileArray){
+					println "false";
+					println "1" + fileArray.length;
+					println "2" + fetch.length;
+				}else{println "true";}
+				
 			}
 
 		}

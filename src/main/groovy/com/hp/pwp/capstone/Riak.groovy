@@ -5,6 +5,8 @@ import com.basho.riak.client.api.commands.kv.StoreValue;
 import com.basho.riak.client.api.commands.kv.FetchValue;
 import com.basho.riak.client.core.query.Location;
 import com.basho.riak.client.core.query.Namespace;
+import com.basho.riak.client.core.query.RiakObject;
+import com.basho.riak.client.core.util.BinaryValue;
 
 import java.net.UnknownHostException;
 import java.util.concurrent.ExecutionException;
@@ -12,19 +14,26 @@ import java.util.concurrent.ExecutionException;
 class Riak{
 	//private String riak_node = System.getenv("RIAKNODE");
 	private RiakClient client = RiakClient.newClient(8087, "172.17.0.3");	
-	private Location location = new Location(new Namespace("Test Bucker"), "TestKey" );
+	private Location location = new Location(new Namespace("Test Bucket"), "TestKey" );
 	
-	public String fetch(){
+	public byte[] fetch(){
 		FetchValue fv = new FetchValue.Builder(location).build();
 		FetchValue.Response response = client.execute(fv);
 
-		String s = response.getValue(String.class);
-		return s;
+		RiakObject obj = response.getValue(RiakObject.class);
+		return obj.getValue().unsafeGetValue();
 
 	}
 
-	public Boolean store(String myData){
-		StoreValue sv = new StoreValue.Builder(myData).withLocation(location).build();
+	public Boolean store(byte[] myData){
+		
+		
+		RiakObject obj = new  RiakObject()
+//charset ISO_8859_1
+			.setContentType("text/plain")
+			.setValue(new BinaryValue(myData));
+		
+		StoreValue sv = new StoreValue.Builder(obj).withLocation(location).build();
 		StoreValue.Response svResponse = client.execute(sv);
 		return svResponse;
 
