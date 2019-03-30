@@ -50,7 +50,8 @@ public class GetWork extends HttpServlet
             println("**GET[WorkA] ERR: " + ex)
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         } finally {
-            //out.close();
+	    
+           // out.close();
         }
     }
 }

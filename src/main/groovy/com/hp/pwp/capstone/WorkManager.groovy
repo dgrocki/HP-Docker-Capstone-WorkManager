@@ -11,6 +11,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import groovy.json.JsonSlurper;
+
 
 class WorkManager{
 
@@ -19,17 +21,23 @@ class WorkManager{
 
 
 		def riak = actor{
-
 			BeanstalkClient beanstalk = new BeanstalkClient();		
+
 			Riak riak_client = new Riak();
 			while(1){
 				String new_work = beanstalk.recieve_riak_work();
-				JsontoJava json = new Gson().fromJson(new_work,JsontoJava.class);
-				String s = json.outputPath;
+				def parser = new JsonSlurper();
+				def data = parser.parseText(new_work);
+
+				println data;	
+				String s = data.outPath;
+
+				println s;
+
 				File file = new File(s);
 				byte[] fileArray;
 				fileArray = Files.readAllBytes(file.toPath());
-				
+
 				String store_value = new String(fileArray);
 				println "Storing in riak... ";
 				riak_client.store(store_value);
@@ -47,17 +55,13 @@ class WorkManager{
 		}
 
 		def await_new_work = actor {
-			println System.getenv("BEANSTALK");
 			BeanstalkClient beanstalk = new BeanstalkClient();		
 			beanstalk.useTube("new_work");
-			while(1){
-
-				final Jetty jetty = new Jetty(8080, beanstalk);
-				jetty.start();
-				Thread.sleep(500);
-				if (false == jetty.isStarted()) {
-					throw new Exception("Cannot start jetty server");
-				}
+			final Jetty jetty = new Jetty(8080, beanstalk);
+			jetty.start();
+			Thread.sleep(500);
+			if (false == jetty.isStarted()) {
+				throw new Exception("Cannot start jetty server");
 			}
 
 		}
@@ -66,7 +70,7 @@ class WorkManager{
 		//setup all the threads
 		[riak, await_new_work]*.join()
 
-		return;
+			return;
 	}
 
 }
