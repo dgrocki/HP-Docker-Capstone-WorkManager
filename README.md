@@ -15,9 +15,10 @@ java -jar <filename>
 
 Make sure the beanstalk connection in .groovy is connected to the same port the Docker container is running on
 
+Start up Riak with 
+docker-compose up -d
 
 Make sure the beanstalkd container and our contaner our running on the same network (use the --net=host)
 example run command:
 
-docker run --net=host work-manager
-docker run --net=host -v /home/grockidile/capstone/HP-Docker-Capstone-WorkerB/PDF:/mnt/ work-manager
+docker run --net=host -v /home/grockidile/capstone/HP-Docker-Capstone-WorkerA/PDF:/mnt/ work-manager
