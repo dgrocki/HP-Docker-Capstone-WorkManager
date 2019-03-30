@@ -6,12 +6,15 @@ import static groovyx.gpars.actor.Actors.actor
 import java.io.File;
 import java.nio.file.Files;
 import java.io.IOException;
-import com.google.gson.Gson
+import org.eclipse.jetty.server.Server
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
 
 class WorkManager{
 
 	public static void main(String [] args) {
-
 
 
 
@@ -46,15 +49,15 @@ class WorkManager{
 		def await_new_work = actor {
 			println System.getenv("BEANSTALK");
 			BeanstalkClient beanstalk = new BeanstalkClient();		
+			beanstalk.useTube("new_work");
 			while(1){
 
-				String new_work = beanstalk.recieve_new_work();
-
-				println "Recieved new work: \n" + new_work;
-
-
-
-				beanstalk.send_to_workerB(new_work);
+				final Jetty jetty = new Jetty(8080, beanstalk);
+				jetty.start();
+				Thread.sleep(500);
+				if (false == jetty.isStarted()) {
+					throw new Exception("Cannot start jetty server");
+				}
 			}
 
 		}
@@ -63,7 +66,7 @@ class WorkManager{
 		//setup all the threads
 		[riak, await_new_work]*.join()
 
-			return;
+		return;
 	}
 
 }

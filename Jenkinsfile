@@ -23,12 +23,22 @@ node('docker') {
 
 	 stage('Gradle Tests') {
 		 sh './gradlew test'
+		 publishHTML([
+			 allowMissing: false, 
+			 alwaysLinkToLastBuild: false, 
+			 keepAll: false, 
+			 reportDir: './build/reports/tests/test/', 
+			 reportFiles: 'index.html', 
+			 reportName: 'HTML Test Report', 
+			 reportTitles: ''
+		 ])
 	 }
 
     stage('Build image') {
         /* This builds the actual image; synonymous to
          * docker build on the command line */
-        dir('docker/work-manager') {app = docker.build("iceberg00/hp-docker-capstone")}
+	sh './gradlew build'
+        app = docker.build("iceberg00/hp-docker-capstone-workmanager")
     }
 
     stage('Test image') {

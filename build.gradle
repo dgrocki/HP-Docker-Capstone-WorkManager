@@ -25,15 +25,14 @@ dependencies {
 
     // Use the awesome Spock testing and specification framework
     testCompile 'org.spockframework:spock-core:1.1-groovy-2.4'
-
    compile group: 'com.surftools', name: 'BeanstalkClient' , version: '1.4.6' 
-   
    compile 'com.basho.riak:riak-client:2.1.1'
    compile 'org.codehaus.gpars:gpars:1.2.0'
-
-	implementation 'com.google.code.gson:gson:2.8.5'
-
-
+   compile group: 'org.eclipse.jetty', name: 'jetty-server', version: '9.4.15.v20190215'
+   compile group: 'org.eclipse.jetty', name: 'jetty-servlet', version: '9.4.15.v20190215'
+   compile group: 'org.eclipse.jetty.websocket', name: 'websocket-api', version: '9.4.15.v20190215'
+   compile group: 'org.eclipse.jetty.websocket', name: 'websocket-server', version: '9.4.15.v20190215'
+   implementation 'com.google.code.gson:gson:2.8.5' 
 }
 
 // In this section you declare where to find the dependencies of your project
@@ -64,16 +63,16 @@ task uberjar(type: Jar, dependsOn: [':compileJava', ':compileGroovy', 'compileSo
     }
 }
 
-task buildImage(type:Exec) {
-    commandLine 'docker', 'build', '-t', 'work-manager', '.'
-}
+//task buildImage(type:Exec) {
+//    commandLine 'docker', 'build', '-t', 'work-manager', '.'
+//}
 
 //task runImage(type:Exec) {
 //    commandLine 'docker', 'run', '-i', 'latest'
 //}
 
 
-build.finalizedBy(buildImage)
+//build.finalizedBy(buildImage)
 //build.finalizedBy(runImage)
 
 
