@@ -24,7 +24,7 @@ node('docker') {
 	 stage('Gradle Tests') {
 		 try{
 		 	sh './gradlew test'
-		 } catch {
+		 } catch (Exception e) {
 			//One or more tests failed	 
 		 }
 		 publishHTML([
