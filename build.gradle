@@ -30,6 +30,7 @@ dependencies {
     testCompile 'org.spockframework:spock-core:1.1-groovy-2.4'
    compile group: 'com.surftools', name: 'BeanstalkClient' , version: '1.4.6' 
    compile 'com.basho.riak:riak-client:2.1.1'
+   compile "org.slf4j:slf4j-simple:1.7.9"
    compile 'org.codehaus.gpars:gpars:1.2.0'
    compile group: 'org.eclipse.jetty', name: 'jetty-server', version: '9.4.15.v20190215'
    compile group: 'org.eclipse.jetty', name: 'jetty-servlet', version: '9.4.15.v20190215'
@@ -47,6 +48,7 @@ repositories {
     	url 'https://mvnrepository.com/artifact/com.surftools/BeanstlkdClient'
 	url 'http://repo.maven.apache.org/maven2'	    
 	url 'https://mvnrepository.com/artifact/com.basho.riak/riak-client'
+	url "http://repo2.maven.org/maven2/"
 	}
     mavenCentral()
 }
