@@ -20,7 +20,8 @@ public class Jetty extends Server
         beanstalk = bs;
         context = new ServletContextHandler(ServletContextHandler.NO_SESSIONS);
         //workManager = new ServletContextHandler(ServletContextHandler.NO_SESSIONS);
-
+	
+	println "in jetty, before servlet createion"
 
         context.setContextPath("/workManager");
         context.addServlet(new ServletHolder(new GetWork(beanstalk)), "/getWorkA/*");
@@ -29,6 +30,8 @@ public class Jetty extends Server
 
         ServletHolder holderEvents = new ServletHolder("ws-events", WorkServlet.class);
         context.addServlet(holderEvents, "/socket/*");
+	
+	println "in jett, after servlet createion"
         
         //workManager.setContextPath("/workManager")
         //context.setHandlers(new Handler[] { workerA, workManager });

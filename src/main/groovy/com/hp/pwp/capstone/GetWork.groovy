@@ -17,6 +17,7 @@ public class GetWork extends HttpServlet
 
     public GetWork(BeanstalkClient beanstalk) 
     {
+	println "Get Work started";
         servBeanStalk = beanstalk;
         output = "";
     }

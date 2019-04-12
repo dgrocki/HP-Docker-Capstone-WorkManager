@@ -65,7 +65,9 @@ class WorkManager{
 			BeanstalkClient beanstalk = new BeanstalkClient();		
 			beanstalk.useTube("new_work");
 			final Jetty jetty = new Jetty(8080, beanstalk);
+			println "jetty made"
 			jetty.start();
+			println "jetty started"
 			Thread.sleep(500);
 			if (false == jetty.isStarted()) {
 				throw new Exception("Cannot start jetty server");

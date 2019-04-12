@@ -13,7 +13,7 @@ import java.util.concurrent.ExecutionException;
 
 class Riak{
 	//private String riak_node = System.getenv("RIAKNODE");
-	private RiakClient client = RiakClient.newClient(8087, "172.17.0.3");	
+	private RiakClient client = RiakClient.newClient("coordinator");	
 	private Location location = new Location(new Namespace("Test Bucket"), "TestKey" );
 	
 	public byte[] fetch(){
