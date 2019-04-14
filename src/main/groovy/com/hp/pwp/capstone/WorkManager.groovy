@@ -47,7 +47,9 @@ class WorkManager{
 				println "Fetching from riak... ";
 				byte[]fetch =  riak_client.fetch();
 				//println fetch;
-				s = "/mnt/Out.pdf";
+				String pod_id = System.getenv("POD_NAME");
+				println pod_id;
+				s = "/mnt/Out_" + pod_id + ".pdf";
 				File file2 = new File(s);
 				Files.write(file2.toPath(), fetch);
 
